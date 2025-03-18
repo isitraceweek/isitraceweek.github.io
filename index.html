@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Is it race week</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    h1 {
+        margin-bottom: 30px
+    }
+    #result {
+      font-size: 80vh;
+      font-weight: bold;
+      line-height: 1;
+    }
+
+    #result.yes {
+      color: red;
+    }
+
+    #result.no {
+       color: black;
+    }
+
+  
+   
+    }
+  </style>
+</head>
+<body>
+
+  <div id="result"></div>
+
+  <script>
+    const raceWeeks = [
+      11, // R1: Australia (14-16 Mar)
+      12, // R2: China (21-23 Mar)
+      14, // R3: Japan (04-06 Apr)
+      15, // R4: Bahrain (11-13 Apr)
+      16, // R5: Saudi Arabia (18-20 Apr)
+      18, // R6: USA Miami (02-04 May)
+      20, // R7: Italy Imola (16-18 May)
+      21, // R8: Monaco (23-25 May)
+      22, // R9: Spain (30 May - 01 Jun)
+      24, // R10: Canada (13-15 Jun)
+      26, // R11: Austria (27-29 Jun)
+      27, // R12: United Kingdom (04-06 Jul)
+      30, // R13: Belgium (25-27 Jul)
+      31, // R14: Hungary (01-03 Aug)
+      35, // R15: Netherlands (29-31 Aug)
+      36, // R16: Italy Monza (05-07 Sep)
+      38, // R17: Azerbaijan (19-21 Sep)
+      40, // R18: Singapore (03-05 Oct)
+      42, // R19: USA Austin (17-19 Oct)
+      43, // R20: Mexico (24-26 Oct)
+      45, // R21: Brazil (07-09 Nov)
+      47, // R22: USA Las Vegas (20-22 Nov)
+      48, // R23: Qatar (28-30 Nov)
+      49  // R24: Abu Dhabi (05-07 Dec)
+    ];
+
+
+    function checkWeek() {
+        const now = new Date();
+
+        function getWeekNumber(date) {
+            const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+            const dayNum = d.getUTCDay() || 7;
+            d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+            const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+            return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+        }
+
+        const currentWeek = getWeekNumber(now);
+        const resultElement = document.getElementById("result");
+        resultElement.classList.remove("yes", "no");
+
+       
+        if (raceWeeks.includes(currentWeek)) {
+            resultElement.textContent = "YES";
+            resultElement.classList.add("yes");
+        } else {
+            resultElement.textContent = "NO";
+            resultElement.classList.add("no");
+        }
+    }
+    
+      checkWeek();
+      setInterval(checkWeek, 1000);
+
+  </script>
+</body>
+</html>
